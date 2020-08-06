@@ -1,0 +1,129 @@
+@font-face { @font-face { font-family: 'IBMPlexSansKR-Text'; 
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Text.woff') 
+    format('woff'); 
+    font-weight: normal; 
+    font-style: normal; } }
+    
+    body{
+        width:100%; 
+        font-family: 'IBMPlexSansKR-Text';
+        font-style: normal; 
+        font-weight: normal;
+        
+        text-align: left;
+        text-transform: none;
+        line-height:1.5;
+    }
+
+    *{padding:0;margin:auto;box-sizing:border-box;}
+    .btn{
+        width: 100%;
+        color: rgb(255, 255, 255);
+        background: rgb(255, 146, 43);
+        border: 0;
+        font-size: 16px;
+        }
+
+    .btn:hover{
+        background: rgb(238, 118, 6);
+        }
+
+    section {margin-top:50px;}
+    .titlebox {
+            position: relative;
+            display: flex;
+            margin-bottom: 20px;
+
+            }
+    
+    /*-------로그인------*/
+    .login-form{
+        padding: 24px;
+        }
+    .logt{
+        font-size: 32px;
+        font-weight: bold;
+    }
+    .form-group a{text-decoration: none;}
+    .resetPw{
+        font-size: 11px;
+        font-weight: normal;
+        line-height: 16px;
+        letter-spacing: normal;
+        display: block;
+        float: left;
+        color: rgb(168, 174, 179);
+        margin: 0px;
+        }
+    .LoginPage{
+        font-size: 11px;
+        font-weight: normal;
+        line-height: 16px;
+        letter-spacing: normal;
+        display: block;
+        float: right;
+        color: black;
+        margin: 0px;
+    }
+    .LoginPageBack{
+        background-image: url(../img/login-bg.png);
+        background-size: cover;
+        flex: 1 1 0%;
+    }
+    .logform{
+        margin-top: 20px;
+        margin-bottom: 0px;
+        }
+    .pwform{margin-bottom: 10px;}  
+    .msgt{
+        color:red;
+        display: flex;
+        margin:2px 0px
+    }
+    .msg{
+        font-size: 11px;
+        line-height: 16px;
+        font-weight: normal;
+        display: flex;
+     
+    }
+    .logBtn{margin-top: 45px;}
+
+    .kakaologin{width: 100%;}
+
+    /*-----비밀번호 찾기-----*/
+    .pageMessege h1{
+        margin-top: 150px;
+        font-size: 32px;
+        line-height: 44px;
+        letter-spacing: -0.6px;
+        margin: 16px 0px 16px;
+        font-weight: 600;
+    }
+    .resetPw-form{
+        margin-top: 20px;
+   
+    }
+    .pageMessege{
+        width: 33.33%;
+    }
+    .pg{padding: 64px 0px 128px;
+    }
+    .sendMail{
+        color: white;
+        background-color: black;
+        margin-top:16px;
+    }
+    .sendMail:hover{
+        background: rgb(168, 174, 179);
+        
+    }
+    
+    @media(max-width:767px){
+        .LoginPageBack{display: none;}
+    }
+ 
+
+
+
+    

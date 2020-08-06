@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   
+<mapper namespace="com.project.user.mapper">
+      
+      
+      <insert id="join">
+      		Insert into users (email, name, phone, pw, postal_code, address1, address2, joinType) values(#{email},#{name},#{phone},#{pw},#{postal_code},#{address1},#{address2}, "default")
+      </insert>
+      
+      <insert id="kakaoJoin">
+      		Insert into users (email, name, phone, pw, postal_code, address1, address2, joinType) values(#{email},#{name},#{phone},#{pw},#{postal_code},#{address1},#{address2}, "kakao")
+      </insert>
+      
+      <select id="login" resultType="Integer">
+      		select count(*) from users where email=#{email} and pw=#{pw}
+      </select>
+      
+      <select id="getInfo" resultType="UserVO">
+      		select * from users where email=#{email}
+      </select>
+      
+      <insert id="imgUpload">
+      		insert into uploadTest values(1, #{path})
+      </insert>
+      
+      <select id="idCheck" resultType="Integer">
+      		select count(*) from users where email=#{email}
+      </select>
+      
+      
+</mapper>
+

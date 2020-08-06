@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   
+<mapper namespace="com.project.product.mapper">
+      
+      
+      <!-- <insert id="ProductRegist">
+      		Insert into products (title, mentor, category, intro, contents, QnA)
+      		values(#{productVO.title}, #{productVO.mentor}, #{productVO.category}, #{productVO.intro}, #{multicontentVO.listStr}, #{multiqnaVO.QnAlistStr})
+      </insert> -->
+      
+      <insert id="ProductRegist">
+      		Insert into products (title, category, intro, volume, price, contents, qna, term, creator, thumbnail)
+      		values(#{productVO.title}, #{productVO.category}, #{productVO.intro}, #{productVO.volume}, #{productVO.price}, #{multicontentVO.listStr}, #{multiqnaVO.qnAListStr}, #{productVO.term}, #{productVO.creator}, #{productVO.thumbnail} )
+      </insert>
+      
+      
+      <select id="getProductInfo" resultType="ProductResultVO">
+      		select * from products where pno = #{pno}
+      </select>
+      
+      <select id="ProductGetNextPno" resultType="Integer">
+      		select max(pno) from products;
+      </select>
+      
+      <insert id="enrollProduct">
+      		insert into enroll values(#{pno},#{email})
+      </insert>
+      
+      
+      
+      <!-- <insert id="ProductRegist">
+      		Insert into products (title, mentor, category, intro)
+      		values(#{title}, #{mentor}, #{category}, #{intro})
+      </insert>
+      
+      <insert id="ProductListRegist">
+      		Insert into contents (pno, ContentImgBox, ContentTextBox)
+      		values(#{pno}, #{ContentImgBox}, #{ContentTextBox})
+      </insert> -->
+      
+      
+      
+</mapper>
+

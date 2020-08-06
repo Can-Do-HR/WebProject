@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   
+<mapper namespace="com.project.creator.mapper">
+    
+      <select id="getMaxEno" resultType="Integer">
+      	 select IFNULL(MAX(eno),0) from EnrollBoard
+      </select>
+      
+      <insert id="insertEnrollBoard">
+      	insert into EnrollBoard (pno, title, content, writer) values ('1', #{title}, #{content}, '김아무개')
+      </insert>
+      
+      <select id="getEnrollList" parameterType="String" resultType="EnrollBoardVO">
+      	select * from EnrollBoard where pno = #{pno}
+      </select>
+      
+</mapper>
+
