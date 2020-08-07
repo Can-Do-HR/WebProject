@@ -7,41 +7,44 @@
       
       
       <!-- <insert id="ProductRegist">
-      		Insert into products (title, mentor, category, intro, contents, QnA)
-      		values(#{productVO.title}, #{productVO.mentor}, #{productVO.category}, #{productVO.intro}, #{multicontentVO.listStr}, #{multiqnaVO.QnAlistStr})
+            Insert into products (title, mentor, category, intro, contents, QnA)
+            values(#{productVO.title}, #{productVO.mentor}, #{productVO.category}, #{productVO.intro}, #{multicontentVO.listStr}, #{multiqnaVO.QnAlistStr})
       </insert> -->
       
       <insert id="ProductRegist">
-      		Insert into products (title, category, intro, volume, price, contents, qna, term, creator, thumbnail)
-      		values(#{productVO.title}, #{productVO.category}, #{productVO.intro}, #{productVO.volume}, #{productVO.price}, #{multicontentVO.listStr}, #{multiqnaVO.qnAListStr}, #{productVO.term}, #{productVO.creator}, #{productVO.thumbnail} )
+            Insert into products (title, category, intro, volume, price, contents, qna, term, creator, thumbnail)
+            values(#{productVO.title}, #{productVO.category}, #{productVO.intro}, #{productVO.volume}, #{productVO.price}, #{multicontentVO.listStr}, #{multiqnaVO.qnAListStr}, #{productVO.term}, #{productVO.creator}, #{productVO.thumbnail} )
       </insert>
       
       
       <select id="getProductInfo" resultType="ProductResultVO">
-      		select * from products where pno = #{pno}
+            select * from products where pno = #{pno}
       </select>
       
       <select id="ProductGetNextPno" resultType="Integer">
-      		select max(pno) from products;
+            select max(pno) from products;
       </select>
       
       <insert id="enrollProduct">
-      		insert into enroll values(#{pno},#{email})
+            insert into enroll values(#{pno},#{email})
       </insert>
+      
+      <select id="getAllProductList" resultType="ProductResultVO">
+            select * from products
+      </select>
       
       
       
       <!-- <insert id="ProductRegist">
-      		Insert into products (title, mentor, category, intro)
-      		values(#{title}, #{mentor}, #{category}, #{intro})
+            Insert into products (title, mentor, category, intro)
+            values(#{title}, #{mentor}, #{category}, #{intro})
       </insert>
       
       <insert id="ProductListRegist">
-      		Insert into contents (pno, ContentImgBox, ContentTextBox)
-      		values(#{pno}, #{ContentImgBox}, #{ContentTextBox})
+            Insert into contents (pno, ContentImgBox, ContentTextBox)
+            values(#{pno}, #{ContentImgBox}, #{ContentTextBox})
       </insert> -->
       
       
       
 </mapper>
-

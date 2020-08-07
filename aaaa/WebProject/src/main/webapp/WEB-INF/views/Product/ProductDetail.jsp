@@ -45,7 +45,7 @@
     </div>
 
 
-						
+                  
 
 
      <div class="item row">
@@ -93,15 +93,15 @@
                         
                         <%-- 
                         <c:forEach begin="1" end="${contentImgList }">
-                        	ㅎㅎㅎ
-                        	${contentImgList }
-                        	<div id="num"></div>
-                        	<script>
-                        			var i= ${contentImgList };
-                        			for(var j = 0; j<i; j++){
-                        				$("#num").html(j+1);
-                        			}
-                        	</script>
+                           ㅎㅎㅎ
+                           ${contentImgList }
+                           <div id="num"></div>
+                           <script>
+                                 var i= ${contentImgList };
+                                 for(var j = 0; j<i; j++){
+                                    $("#num").html(j+1);
+                                 }
+                           </script>
                         </c:forEach>
                          --%>
                          
@@ -110,13 +110,13 @@
                         <hr>
                         <c:forEach var="item" begin="0" end="${contentImgList }" items="${contentTextList }" varStatus="vs">
                         
-                        	<div class="summary-img">
-                            	<img src="${pageContext.request.contextPath}/Display/productImgLoad?pno=${productVO.pno }&img=${vs.index}">
-                        	</div>
-                        	<div class="summary-content">
-                            	<span>${item }<!-- <br>짱짱~ --></span>
-                        	</div>
-                        	
+                           <div class="summary-img">
+                               <img src="${pageContext.request.contextPath}/Display/productImgLoad?pno=${productVO.pno }&img=${vs.index}">
+                           </div>
+                           <div class="summary-content">
+                               <span>${item }<!-- <br>짱짱~ --></span>
+                           </div>
+                           
                         </c:forEach>
                         <hr>
                         <hr>
@@ -158,17 +158,36 @@
                         <hr>
                     </span>
                     
-                    <div class="qna-box-space">
                     
-                    	<c:forEach var="item" items="${qnaQList }">
-                    		<div>
+                    
+                    <div class="qna-box-space">
+                       
+                          <h2>ㅋㅋㅋㅋㅋㅋ</h2>
+                       <c:forEach var="i" items="${map }">
+                          <h2>ㅎㅎㅎㅎㅎㅎㅎ</h2>
+                          <h2>${i.key }</h2>
+                          <div class="qna-box">
+                               <div>
+                                   <span class="qSpan">Q : ${i.key }</span><br>
+                               </div>
+                               <div>
+                                   <span class="aSpan">A : ${i.value }</span>
+                               </div>
+                           </div>
+                       
+                       </c:forEach>
+                       
+                       <%-- 
+                       <c:forEach var="item" items="${qnaQList }">
+                          <div>
                                 Q : <span class="qSpan">${var }</span><br>
                             </div>
                             <div>
                                 A : <span class="aSpan">빠른 탈주방법을 배웁니다</span>
                             </div>
-                    	</c:forEach>	
-                    
+                       </c:forEach>   
+                     --%>
+                     <!-- 
                         <div class="qna-box">
                             <div>
                                 Q : <span class="qSpan">무엇을 배우나요?</span><br>
@@ -195,6 +214,8 @@
                                 A : <span class="aSpan">호카게입니다</span>
                             </div>
                         </div>
+                        
+                         -->
                     </div>
                 </div>
                 <div class="item-content-postscript">

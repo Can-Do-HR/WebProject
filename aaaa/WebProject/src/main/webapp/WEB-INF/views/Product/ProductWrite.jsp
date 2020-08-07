@@ -11,7 +11,6 @@
     <title>Document</title>
       
     <script src="${pageContext.request.contextPath}/js/jquery-3.5.1.js"></script>
-    <script src="${pageContext.request.contextPath}/js/creatorBoard.js"></script>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/home.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/utilProduct.css">
@@ -31,22 +30,22 @@
                         <div>
                             * 강좌 섬네일 이미지:<br>
                             <div class="lecture-thumbnail-img">
-                                <img class="thumbnail-img">
-                                <svg width="3em" height="3em" viewBox="0 0 16 16" class="bi bi-image-fill" fill="#b9b9b9" xmlns="http://www.w3.org/2000/svg">
+                                <img class="thumbnail-img" id="thumbnail-img">
+                                <svg width="3em" height="3em" viewBox="0 0 16 16" id="bi-image-fill" class="bi bi-image-fill" fill="#b9b9b9" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd" d="M.002 3a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-12a2 2 0 0 1-2-2V3zm1 9l2.646-2.354a.5.5 0 0 1 .63-.062l2.66 1.773 3.71-3.71a.5.5 0 0 1 .577-.094L15.002 9.5V13a1 1 0 0 1-1 1h-12a1 1 0 0 1-1-1v-1zm5-6.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
                                 </svg>
                             </div>
-                            <input type="file" accept=".jpg, .jpeg, .png" class="lecture-info-img-input" name="thumb"><br>
-                            <span class="guid">섬네일 이미지는 4:3의 비율을 추천합니다.</span><br>
+                            <input type="file" accept=".jpg, .jpeg, .png" style="display: none;" class="lecture-info-img-input" id="thumbFile" name="thumb"><br>
+                            <span class="guid" id="guid">섬네일 이미지는 4:3의 비율을 추천합니다.</span><br>
                         </div>
                         
                     </div>
                     
                     * 카테고리 : <select name="category">
-                        <option value="">1</option>
-                        <option value="">2</option>
-                        <option value="">3</option>
-                        <option value="">4</option>
+                        <option value="카테고리1">1</option>
+                        <option value="카테고리2">2</option>
+                        <option value="카테고리3">3</option>
+                        <option value="카테고리4">4</option>
                     </select><br>
                     
                     <span class="form-notice"></span><br>
@@ -59,8 +58,8 @@
                     <div class="lecture-info-date-picker">
                         * 강좌 기간: <!-- <input type="text" size="15" name="startDate">   ~   <input type="text" size="15" name="endDate"> -->
                     </div>
-                    		  <input type="hidden" name="term" value="000">
-                    		  <input type="hidden" name="creator" value="000">
+                            <input type="hidden" name="term" value="000">
+                            <input type="hidden" name="creator" value="000">
                     * 강좌 가격: <input type="text" size="52" name="price"><br>
                     * 강좌 분량: <input type="text" size="52" name="volume">
                     <span class="form-notice"></span>
@@ -91,9 +90,10 @@
             <div class="lecture-step-two">
                 <div class="summary-box-space">
                     <div class="lecture-summary">
-                        <div class="lecture-summary-img">
+                        <div class="lecture-summary-img" id="lecture-summary-img0">
+                           <img id="ContentImg0">
                         </div>
-                        <input type="file"  name="ContentImg">
+                        <input type="file"  name="ContentImg" style="display: none" id="ContentImgInput0">
                         <textarea cols="30" rows="7" name="ContentList[0].ContentTextBox"></textarea>
                     </div>
                     <div class="add-write-button">
@@ -126,6 +126,7 @@
              
         </form>
 
+    <script src="${pageContext.request.contextPath}/js/creatorBoard.js"></script>
     </section>
 </body>
 </html>

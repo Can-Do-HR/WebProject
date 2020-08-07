@@ -19,6 +19,7 @@
             <form action="CreatorBoardModifyUpdate" method="POST" name="creatorRegForm" style="margin:300px;">
                 <div class="input-box">
                 	<input type="disable" name="eno" value="${enrollBoardVO.eno }">
+                	<input type="disable" name="pno" value="${enrollBoardVO.pno }">
                     <input type="text" name="title" value="${enrollBoardVO.title }">
                 </div>
                 <div class="summary-box-space">

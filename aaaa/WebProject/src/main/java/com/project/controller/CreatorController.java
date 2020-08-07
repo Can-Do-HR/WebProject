@@ -105,6 +105,7 @@ public class CreatorController {
 		return "/Creator/EnrollModify";
 	}
 	
+	//TODO: 수정폼에서 input 속성 잘 생각하기...
 	@RequestMapping("/EnrollBoardModifyUpdate")
 	public String enrollBoardModifyUpdate(EnrollBoardVO enrollBoardVO) {
 		int eno = enrollBoardVO.getEno();

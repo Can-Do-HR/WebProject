@@ -31,6 +31,7 @@
             <typeAlias alias="ProductVO" type="com.project.product.VO.ProductVO"></typeAlias>
             <typeAlias alias="ProductResultVO" type="com.project.product.VO.ProductResultVO"></typeAlias>
             <typeAlias alias="EnrollBoardVO" type="com.project.creator.VO.EnrollBoardVO"/>
+            <typeAlias alias="ReviewVO" type="com.project.review.VO.ReviewVO"/>
       </typeAliases>
  
  
