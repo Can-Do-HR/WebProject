@@ -1,14 +1,21 @@
 package com.project.controller;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.project.creator.VO.EnrollBoardContentVO;
@@ -41,8 +48,10 @@ public class CreatorController {
 	}
 	
 	@RequestMapping("/EnrollDetail") //강좌 게시판 자세히 보기(접근권한: 수강생, 크리에이터)
-	public String enrollDetail(String pno, String eno) {
-		EnrollBoardVO enrollBoardVO = creatorService.getEnrollDetailBoard();
+	public String enrollDetail(String eno, String pno, Model model) {
+		EnrollBoardVO enrollBoardVO = creatorService.getEnrollDetailBoard(eno, pno);
+		System.out.println(enrollBoardVO.toString());
+		model.addAttribute("enrollBoardVO", enrollBoardVO);
 		return "/Creator/EnrollDetail";
 	}
 	
@@ -87,11 +96,35 @@ public class CreatorController {
 		return "Redirect://Creator/EnrollBoard";
 	}
 	
-	@RequestMapping("/EnrollModify") // 강좌 수정(접근권한: 크리에이터)
-	public String enrollModify() {
+	
+	
+	@RequestMapping("/EnrollBoardModify") // 강좌 수정페이지(접근권한: 크리에이터)
+	public String enrollBoardModify(String eno, String pno, Model model) {
+		EnrollBoardVO enrollBoardVO = creatorService.getEnrollDetailBoard(eno, pno);
+		model.addAttribute("enrollBoardVO", enrollBoardVO);
 		return "/Creator/EnrollModify";
 	}
 	
+	@RequestMapping("/EnrollBoardModifyUpdate")
+	public String enrollBoardModifyUpdate(EnrollBoardVO enrollBoardVO) {
+		int eno = enrollBoardVO.getEno();
+		int pno = enrollBoardVO.getPno();
+		return "redirect:/Creator/EnrollDetail?eno=" + eno + "$pno=?" + pno;
+	}
 	
+	
+	//image 전송 REST API
 
+	@RequestMapping(
+			value = "/EnrollBoardImg"
+			)
+	public @ResponseBody byte[] getEnrollBoardImg(String eno, String fileName) throws IOException{
+//		InputStream in = getClass().getResourceAsStream(creatorFolderPath + "\\" + eno + "\\" + fileName);
+		System.out.println(fileName);
+		String imgPath = creatorFolderPath + "\\" + eno + "\\" + fileName; 
+		InputStream imgFile = new BufferedInputStream(new FileInputStream(imgPath));
+		return IOUtils.toByteArray(imgFile);
+	}
+	
+	
 }

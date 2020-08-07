@@ -12,6 +12,6 @@ public interface CreatorService {
 	
 	public List<EnrollBoardVO> getEnrollList(String pno);
 	
-	public EnrollBoardVO getEnrollDetailBoard(String pno, String eno);
+	public EnrollBoardVO getEnrollDetailBoard(String eno, String pno);
 	
 }

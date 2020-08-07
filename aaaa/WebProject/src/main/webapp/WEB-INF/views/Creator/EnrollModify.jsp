@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,9 +16,10 @@
 <body>
     <section>
         <div class="form-box">
-            <form action="CreatorBoardRegist" method="POST" name="creatorRegForm" style="margin:300px;">
+            <form action="CreatorBoardModifyUpdate" method="POST" name="creatorRegForm" style="margin:300px;">
                 <div class="input-box">
-                    <input type="text" placeholder="">
+                	<input type="disable" name="eno" value="${enrollBoardVO.eno }">
+                    <input type="text" name="title" value="${enrollBoardVO.title }">
                 </div>
                 <div class="summary-box-space">
                     <div class="lecture-summary">

@@ -13,8 +13,12 @@
       	insert into EnrollBoard (pno, title, content, writer) values ('1', #{title}, #{content}, '김아무개')
       </insert>
       
-      <select id="getEnrollList" parameterType="String" resultType="EnrollBoardVO">
+      <select id="getEnrollList"  resultType="EnrollBoardVO">
       	select * from EnrollBoard where pno = #{pno}
+      </select>
+      
+      <select id="getEnrollDetailBoard" parameterType="map" resultType="EnrollBoardVO">
+      	select * from EnrollBoard where pno = #{pno} and eno = #{eno}
       </select>
       
 </mapper>

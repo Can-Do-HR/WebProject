@@ -1,7 +1,9 @@
 package com.project.creator.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,8 +47,11 @@ public class CreatorServiceImpl implements CreatorService{
 	}
 	
 	@Override
-	public EnrollBoardVO getEnrollDetailBoard(String pno, String eno) {
-		return sqlsession.selectOne(mapperPath + ".getEnrollDetailBoard", );
+	public EnrollBoardVO getEnrollDetailBoard(String eno, String pno) {
+		Map<String,String> map = new HashMap<String, String>();
+		map.put("pno", pno);
+		map.put("eno", eno);
+		return sqlsession.selectOne(mapperPath + ".getEnrollDetailBoard", map);
 	}
 	
 }
