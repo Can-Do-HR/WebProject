@@ -1,4 +1,4 @@
-package com.project.user.service;
+package com.project.util;
 
 import java.security.MessageDigest;
 

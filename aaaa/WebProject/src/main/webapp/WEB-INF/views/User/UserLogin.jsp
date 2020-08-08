@@ -49,7 +49,7 @@
                             </div>
                             <div class="buttonWrap">
                                 <a class="resetPwButton" href="resetPw.html">비밀번호를 잊으셨나요?</a>
-                                <a class="joinButton" href="Join">회원가입하기</a>
+                                <a class="joinButton" href="UserJoin">회원가입하기</a>
     
                             </div>
                             

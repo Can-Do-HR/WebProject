@@ -1,4 +1,4 @@
-package com.project.creator.VO;
+package com.project.creator.vo;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;

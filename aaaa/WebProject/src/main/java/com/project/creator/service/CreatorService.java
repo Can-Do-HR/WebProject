@@ -3,7 +3,7 @@ package com.project.creator.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.project.creator.VO.EnrollBoardVO;
+import com.project.creator.vo.EnrollBoardVO;
 
 public interface CreatorService {
 	

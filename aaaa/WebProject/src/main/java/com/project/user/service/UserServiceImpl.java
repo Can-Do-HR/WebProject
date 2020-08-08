@@ -10,14 +10,13 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.project.user.VO.UserVO;
+import com.project.user.vo.UserVO;
 
 @Service("UserService")
 public class UserServiceImpl implements UserService{
 	
 	@Autowired
 	private SqlSession sqlsession;
-	private UserDAO userDAO;
 	
 	@Override
 	public int join(UserVO vo) {
@@ -140,8 +139,8 @@ public class UserServiceImpl implements UserService{
 				}
 				vo.setPw(pw);
 				// 비밀번호 변경
-				
-				userDAO.updatePw(vo); //null값
+				//TODO: user> 언니 체크해주세요
+//				userDAO.updatePw(vo); //null값
 				// 비밀번호 변경 메일 발송
 				
 				sendEmail(vo, "findPw");

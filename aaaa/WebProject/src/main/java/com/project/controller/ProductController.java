@@ -20,14 +20,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.project.product.VO.EnrollVO;
-import com.project.product.VO.IntegratedContentVO;
-import com.project.product.VO.MultiContentVO;
-import com.project.product.VO.MultiQnAVO;
-import com.project.product.VO.ProductResultVO;
-import com.project.product.VO.ProductVO;
-import com.project.product.VO.QnAVO;
 import com.project.product.service.ProductService;
+import com.project.product.vo.EnrollVO;
+import com.project.product.vo.IntegratedContentVO;
+import com.project.product.vo.MultiContentVO;
+import com.project.product.vo.MultiQnAVO;
+import com.project.product.vo.ProductResultVO;
+import com.project.product.vo.ProductVO;
+import com.project.product.vo.QnAVO;
+import com.project.util.FilePath;
 
 @Controller
 @RequestMapping("/Product")
@@ -36,7 +37,7 @@ public class ProductController {
    @Autowired
    ProductService productService;
    
-   public static final String uploadFolder = "D:\\course\\spring\\upload\\board\\";
+//   public static final String uploadFolder = "D:\\course\\spring\\upload\\board\\";
 
 
    @RequestMapping("ProductWrite")
@@ -69,7 +70,7 @@ public class ProductController {
       String NextPnoFolder = String.valueOf(NextPno+1);
       
       //File newFolder = new File("D:\\course\\spring\\upload\\" + (NextPno+1));   
-      File newFolder = new File(uploadFolder + NextPnoFolder);   
+      File newFolder = new File(FilePath.productPath + NextPnoFolder);   
       newFolder.mkdir();
       
 
@@ -78,13 +79,13 @@ public class ProductController {
       try {
          String fileRealName = thumb.getOriginalFilename(); //실제파일명
          
-         File ThumbNailFolder = new File(uploadFolder + NextPnoFolder + "\\thumbnail");
+         File ThumbNailFolder = new File(FilePath.productPath + NextPnoFolder + "\\thumbnail");
          ThumbNailFolder.mkdir();
          
-         File saveFile = new File(uploadFolder + NextPnoFolder + "\\thumbnail\\" + fileRealName );
+         File saveFile = new File(FilePath.productPath + NextPnoFolder + "\\thumbnail\\" + fileRealName );
          thumb.transferTo(saveFile); //실제 파일을 저장해주는 메서드 filewriter작업을 손쉽게 해주는 스프링 메서드
          
-         productVO.setThumbnail(uploadFolder + NextPnoFolder + "\\thumbnail\\" + fileRealName);
+         productVO.setThumbnail(FilePath.productPath + NextPnoFolder + "\\thumbnail\\" + fileRealName);
          
          //System.out.println("thumb : "  + productVO.getThumbnail());
          
@@ -96,7 +97,7 @@ public class ProductController {
 
       try {
          
-         File ContentImgFolder = new File(uploadFolder + NextPnoFolder + "\\contentImg");
+         File ContentImgFolder = new File(FilePath.productPath + NextPnoFolder + "\\contentImg");
          ContentImgFolder.mkdir();
 
          for(int i = 0; i < list.size(); i++) {
@@ -109,11 +110,11 @@ public class ProductController {
             fileRealName = String.valueOf(i+1);
             fileRealName += fileExtension;
 
-            File saveFile = new File(uploadFolder + NextPnoFolder + "\\contentImg\\" + fileRealName);
+            File saveFile = new File(FilePath.productPath + NextPnoFolder + "\\contentImg\\" + fileRealName);
             list.get(i).transferTo(saveFile); //실제 파일을 저장
 
 
-            multicontentVO.getContentList().get(i).setContentImgBox(uploadFolder + NextPnoFolder + "\\contentImg\\" + fileRealName);
+            multicontentVO.getContentList().get(i).setContentImgBox(FilePath.productPath + NextPnoFolder + "\\contentImg\\" + fileRealName);
          }
 
       } catch (Exception e) {
@@ -182,44 +183,17 @@ public class ProductController {
          map.put(qnaQList.get(i), qnaAList.get(i));
       }
       
-      System.out.println("map");
-      System.out.println("map");
-      System.out.println("map");
-      System.out.println("map");
-      System.out.println("map");
-      System.out.println("map");
-      System.out.println("map");
-      System.out.println(map.toString());
-      System.out.println(map.toString());
-      System.out.println(map.toString());
-      System.out.println(map.toString());
-      System.out.println(map.toString());
-      System.out.println(map.toString());
-      System.out.println(map.toString());
-      System.out.println(map.toString());
-      System.out.println(map.toString());
-      System.out.println(map.toString());
-
-      System.out.println("contentImgList : " + contentImgList.toString());
-      System.out.println("contentImgList : " + contentTextList.toString());
-
-
-
-
 
       model.addAttribute("productVO",productResultVO);
       model.addAttribute("contentImgList",contentImgList.size());
       model.addAttribute("contentTextList",contentTextList);
       model.addAttribute("map",map);
-      model.addAttribute("qnaQList",qnaQList);
-      model.addAttribute("qnaAList",qnaAList);
+//      model.addAttribute("qnaQList",qnaQList);
+//      model.addAttribute("qnaAList",qnaAList);
       //model.addAttribute("ImgList",ImgList);
 
       return "/Product/ProductDetail";
    }
-
-
-   
 
 
    //강의 등록                     //권한 필터 필요

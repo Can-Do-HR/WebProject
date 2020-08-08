@@ -4,7 +4,7 @@ package com.project.user.mapper;
 
 import javax.servlet.http.HttpServletResponse;
 
-import com.project.user.VO.UserVO;
+import com.project.user.vo.UserVO;
 
 public interface UserMapper {
 	public int join(UserVO vo);

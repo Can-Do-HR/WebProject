@@ -3,7 +3,7 @@ package com.project.user.service;
 
 import javax.servlet.http.HttpServletResponse;
 
-import com.project.user.VO.UserVO;
+import com.project.user.vo.UserVO;
 
 public interface UserService {
 	public int join(UserVO vo);//회원가입처리

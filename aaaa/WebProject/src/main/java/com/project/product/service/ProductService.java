@@ -3,12 +3,12 @@ package com.project.product.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.project.product.VO.ContentVO;
-import com.project.product.VO.EnrollVO;
-import com.project.product.VO.IntegratedContentVO;
-import com.project.product.VO.MultiContentVO;
-import com.project.product.VO.ProductResultVO;
-import com.project.product.VO.ProductVO;
+import com.project.product.vo.ContentVO;
+import com.project.product.vo.EnrollVO;
+import com.project.product.vo.IntegratedContentVO;
+import com.project.product.vo.MultiContentVO;
+import com.project.product.vo.ProductResultVO;
+import com.project.product.vo.ProductVO;
 
 public interface ProductService {
    

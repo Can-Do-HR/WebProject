@@ -1,7 +1,8 @@
 package com.project.util;
 
+import lombok.Data;
 
-
+@Data
 public class ReviewPageVO {
    //criteria를 받아서 화면에 보여줄 버튼을 계산할 클래스
    

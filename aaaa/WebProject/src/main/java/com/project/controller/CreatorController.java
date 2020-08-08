@@ -18,18 +18,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.project.creator.VO.EnrollBoardContentVO;
-import com.project.creator.VO.EnrollBoardVO;
-import com.project.creator.VO.MultiEnrollBoardContentVO;
 import com.project.creator.service.CreatorService;
+import com.project.creator.vo.EnrollBoardContentVO;
+import com.project.creator.vo.EnrollBoardVO;
+import com.project.creator.vo.MultiEnrollBoardContentVO;
+import com.project.util.FilePath;
 import com.project.util.FileUtil;
 import com.project.util.StringUtil;
 
 @Controller
 @RequestMapping("/Creator")
 public class CreatorController {
-	//파일 저장 경로
-	private final String creatorFolderPath = "D:\\course\\spring\\upload\\creator";
 	
 	@Autowired
 	CreatorService creatorService;
@@ -72,7 +71,7 @@ public class CreatorController {
 		System.out.println(multiEnrollBoardContentVO.getEnrollBoardList().get(0).getContentText());
 		
 		//파일 업로드
-		List<String> fileNameList = fileUtil.fileListUpload(list, creatorFolderPath, eno);
+		List<String> fileNameList = fileUtil.fileListUpload(list, FilePath.boardPath, eno);
 		System.out.println(fileNameList);
 		
 		//multiple row가 좋긴 한데 도무지 뺄 방법이 없어서 야생의 방법으로 빼옵니다. 두 List를 준비해주세요
@@ -122,7 +121,7 @@ public class CreatorController {
 	public @ResponseBody byte[] getEnrollBoardImg(String eno, String fileName) throws IOException{
 //		InputStream in = getClass().getResourceAsStream(creatorFolderPath + "\\" + eno + "\\" + fileName);
 		System.out.println(fileName);
-		String imgPath = creatorFolderPath + "\\" + eno + "\\" + fileName; 
+		String imgPath = FilePath.boardPath + "\\" + eno + "\\" + fileName; 
 		InputStream imgFile = new BufferedInputStream(new FileInputStream(imgPath));
 		return IOUtils.toByteArray(imgFile);
 	}

@@ -3,7 +3,7 @@ package com.project.review.mapper;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.project.review.VO.ReviewVO;
+import com.project.review.vo.ReviewVO;
 
 public interface ReviewMapper {
    public String reviewBoard();

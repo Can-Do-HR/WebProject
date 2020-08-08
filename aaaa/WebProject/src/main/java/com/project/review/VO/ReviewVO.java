@@ -1,4 +1,4 @@
-package com.project.review.VO;
+package com.project.review.vo;
 
 import java.sql.Timestamp;
 

@@ -232,21 +232,7 @@
                             <span class="review-writer"><b>박침대</b></span> <span class="review-star">★★★★☆</span>
                             <span class="review-content">침대짱</span>
                         </div>
-                        <div class="review-write-box">
-                            <form>
-                                <span class="review-write-guide">"수강 후기를 작성해주세요!"</span><br>
-                                <label>만족도:</label>
-                                <select>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                </select>
-                                <input type="text" placeholder="후기는 몇자이내?" size="80">
-                                <button type="button">후기 작성하기</button><br>
-                            </form>
-                        </div>
+                        <a href="${pageContext.request.contextPath}/Review/ReviewBoard?pno=${productVO.pno}"><div class="review-board-link">리뷰 더 보기 >></div></a>
                     </div>
                 </div>
 

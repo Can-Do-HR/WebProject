@@ -5,7 +5,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.sql.Timestamp;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,7 +13,9 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,28 +25,35 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.google.gson.JsonObject;
-import com.project.user.VO.UserVO;
-import com.project.user.service.UserDAO;
 import com.project.user.service.UserService;
-import com.project.user.service.UserSha256;
+import com.project.user.vo.UserVO;
 
+/**
+ * 
+ * @author 김이슬, 변호찬
+ *
+ */
 @Controller
 @RequestMapping("/User")
 public class UserController {
    
    @Autowired
    UserService userService;
-
    
    @RequestMapping("/UserLogin")
    public String UserLogin() {
       return "/User/UserLogin";
    }
    
+   @RequestMapping("CreatorJoin")
+   public String CreatorJoin() {
+      return "/User/CreatorJoin";
+   }
+   
    @RequestMapping("LoginForm")
    public String UserLoginForm(UserVO vo, HttpSession session, RedirectAttributes RA) {
       
+	   //TODO:암호화 구현된거! 지우지마시오!
 //      vo.setPw(UserSha256.encrypt(vo.getPw()));
 //      String inputPw = vo.getPw();
 //      String inputEncryptedPw = UserSha256.encrypt(inputPw);
@@ -76,9 +84,8 @@ public class UserController {
       
    }
    
-   
    @RequestMapping("KakaoLogin")
-   public String KakaoLogin(HttpServletRequest request,@RequestBody UserVO vo) {
+   public String KakaoLogin(HttpServletRequest request, @RequestBody UserVO vo) {
       
       String k_name = request.getParameter("name");
       String k_email = request.getParameter("email");
@@ -93,28 +100,24 @@ public class UserController {
       System.out.println("kakao result : " + result);
       
       if(result == 0) {
-         UserVO uservo = new UserVO(k_email, k_name, "-", "-", "-", "-", "-",null);
-         int result2 = userService.kakaoJoin(uservo);
-         
-         System.out.println("result2 : " + result2);
+//         UserVO uservo = new UserVO(k_email, k_name, "-", "-", "-", "-", "-",null);
+//         int result2 = userService.kakaoJoin(uservo);
       }
-      
       HttpSession session = request.getSession();
       session.setAttribute("k_email", k_email);
       session.setAttribute("k_name", k_name);
-      
       return "/home";
    }
    
    
-   @RequestMapping("LogOut")
-   public String UserLogOut(HttpSession session) {
-      session.invalidate();
+   @RequestMapping("/Logout")
+   public String UserLogout(HttpSession session) {
+      session.invalidate(); //TODO: 로그인 정보 세션만 지우세요.
       return "redirect:/";
    }
       
    @ResponseBody
-   @RequestMapping(value = "/emailCheck", method = RequestMethod.POST)
+   @GetMapping("/emailCheck")
    public int UserIdCheck(@RequestBody UserVO vo) {      //오류잇는지 확인
        int result = userService.idCheck(vo);
         System.out.println("중복여부 : " + result);
@@ -126,7 +129,8 @@ public class UserController {
       return "/User/UserJoin";
    }
    
-   @RequestMapping(value="JoinForm",method = RequestMethod.POST)
+   //vo 부분 가독성있게 userVO를 적어주세요
+   @PostMapping("/JoinForm")
    public String UserJoinForm(UserVO vo, RedirectAttributes RA) {
       
 //      // 암호 확인
@@ -155,7 +159,7 @@ public class UserController {
    }
 
    
-   @RequestMapping("Mypage")
+   @RequestMapping("/Mypage")
    public String UserMypage() {
       return "/User/UserMypage";
    }
@@ -170,7 +174,7 @@ public class UserController {
       return "/User/UserUpdate";
    }
 
-   @RequestMapping(value="UpdateForm",method = RequestMethod.POST)
+   @PostMapping("UpdateForm")
     public String UpdateForm(UserVO vo,HttpSession session,RedirectAttributes RA) {
          
          //수정
@@ -187,21 +191,24 @@ public class UserController {
     }
    
    @ResponseBody
-   @RequestMapping(value = "/pwCheck", method = RequestMethod.POST)
+   @PostMapping("/pwCheck")
    public int pwCheck(@RequestBody UserVO vo) {      
        int result = userService.pwCheck(vo);
        System.out.println("일치여부 : " + result);
         return result;
    }
    
-   @RequestMapping(value="/delete",method = RequestMethod.POST)
-    public String delete(UserVO vo,HttpSession session,RedirectAttributes RA) {
+   //TODO: 이름 delete > UserDelete로 직관적으로 바꿨는데 못찾겠어요ㅠ
+   //TODO: RedirectAttribute를 Request로 바꾸자..그게그거에요
+   @PostMapping("/UserDelete")
+    public String UserDelete(UserVO vo,HttpServletRequest request) {
 	   int result = userService.pwCheck(vo);
        if(result==1) {
           userService.delete(vo);
-          session.invalidate();
+//          session.invalidate(); //왜 또 세션 날려요 엉엉
          }else {
-            RA.addFlashAttribute("msg","탈퇴실패");
+//            RA.addFlashAttribute("msg","탈퇴실패");
+        	request.setAttribute("msg", "탈퇴에 실패했습니다.");
             return "redirect:/User/UserUpdate";
          }
       
@@ -214,184 +221,20 @@ public class UserController {
    }
    
    //비번찾기 폼
-   @RequestMapping(value="emailForm")
+   @RequestMapping("emailForm")
    public String emailForm() {
 
 	   return "/User/UserModifyPw";
    }
    
-   @RequestMapping(value="emailForm.do",method = RequestMethod.POST)
+   @PostMapping("emailForm.do")
    public void findPw(@ModelAttribute UserVO vo,HttpServletResponse response) throws Exception {
 	   userService.findPw(vo,response);
 	   
    }
           
    
-   @RequestMapping("CreatorJoin")
-   public String CreatorJoin() {
-      return "/User/CreatorJoin";
-   }
-   
-   
-   @RequestMapping("upload")
-   public String Userupload() {
-      return "/User/upload";
-   }
-   
-   
-   @RequestMapping("uploadForm") 
-   public String upload(MultipartHttpServletRequest mtf, Model model) throws Exception { 
-      
-      
-      System.out.println("upload");
-      System.out.println("upload");
-      System.out.println("upload");
-      
-      // 파일 태그 
-      String fileTag = "file"; 
-      
-      // 업로드 파일이 저장될 경로 
-      String filePath = "D:\\course\\project-img-storage" + "\\";       //경로 한단계 상위로 들어가서 \\한번 더 붙여줌
-      //String filePath = "D:\\course\\Spring-hoho\\spring\\test2\\src\\main\\webapp\\resources\\img" + "\\";
-      
-      // 파일 이름 
-      MultipartFile file = mtf.getFile(fileTag); 
-      String fileName = file.getOriginalFilename();       //파일 이름 지정
-      
-      // 파일 전송 
-      try { 
-         file.transferTo(new File(filePath + fileName)); 
-         
-         
-         int result = userService.imgUpload(filePath + fileName);
-         System.out.println("result : " + result);
-         System.out.println(filePath + fileName);
-         
-         model.addAttribute("img",filePath + fileName);
-         
-      } catch(Exception e) { 
-         System.out.println("업로드 오류"); 
-      } 
-      
-      return "/User/uploadResult";
-
-   }
-   
-   
-   @RequestMapping("uploadResult")
-   public String UseruploadResult() {
-      return "/User/uploadResult";
-   }
-   
-   
-   
-   @RequestMapping("fileupload.do")
-   public void imageUpload(HttpServletRequest request,HttpServletResponse response, @RequestParam MultipartFile upload) {
-         
-      
-         OutputStream out = null;
-         PrintWriter printWriter = null;
-
-         response.setCharacterEncoding("utf-8");
-         response.setContentType("text/html;charset=utf-8");
-         
-         
-         System.out.println("들어왓다1");
-
-         try {
-            //CKEDITOR에서 업로드된 파일의 이름을 참조
-            String fileName = upload.getOriginalFilename();
-            System.out.println("들어왓다2");
-            
-            //CKEDITOR에서 업로드된 파일을 byte 배열로 참조
-            byte[] bytes = upload.getBytes(); /*이미지 포함 모든 데이터는 바이트*/
-            System.out.println("들어왓다3");
-
-            //실제 업로드 될 톰캣서버의 물리적 경로
-            HttpSession session = request.getSession();
-            System.out.println("들어왓다4");
-            String root_path = session.getServletContext().getRealPath("/");
-            System.out.println("들어왓다5");
-
-            
-            //실서버 톰캣 스왑시 주석변경
-            String uploadPath =root_path+"resources\\upload\\ckeditor\\" + fileName; //윈도우
-            //String uploadPath =root_path+"resources/upload/ckeditor/" + fileName; //리눅스
-            System.out.println("들어왓다6");
-
-            System.out.println(uploadPath);
-
-            //C:\\swk\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp1\\wtpwebapps\\chaumi\\resources\\upload\\
-//출력스트객체 생성(파일생성)
-
-            out = new FileOutputStream(new File(uploadPath)); /* 빈폴더 생성*/
-            System.out.println("들어왓다7");
-
-            //업로드된 파일의 바이트배열을 출력스트림에 사용.
-            out.write(bytes); /*실제 파일에대한 정보를 담고있음*/
-            out.flush();
-
-            
-            String callback = request.getParameter("CKEditorFuncNum");
-            System.out.println("들어왓다8");
-
-            printWriter = response.getWriter(); ///responese 서버측에서 클라이언트로 정보를 보내고자 할때 그역활을 담당하는 객체...
-
-            //CKEDITOR 에 업로드 된 서버측의 파일경로를 반환하는 목적
-            
-            String fileUrl = "/upload/ckeditor/" + fileName;   ///resources/upload/ + fileName
-            //String fileUrl = "D:\\course\\Spring-hoho\\spring\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\test2\\resources\\upload\\ckeditor" + fileName;
-
-            
-
-            
-            
-            System.out.println(fileUrl+"fileUrl");
-            System.out.println("들어왓다9");
-
-            printWriter.println("{\"filename\" : \"" + fileName + "\", \"uploaded\" : 1, \"url\":\"" + fileUrl + "\"}");
-
-            printWriter.flush();
-
-            System.out.println("들어왓다10");
-
-         } catch (IOException e) {
-
-            e.printStackTrace();
-
-         } finally {
-
-            try {
-
-               if ( out != null) {
-
-                  out.close();
-
-               }
-
-               if (printWriter != null) {
-
-                  printWriter.close();
-
-               }
-
-            }catch(IOException e) {
-
-               e.printStackTrace();
-
-            }
-
-         }
-
-         
-
-         return;
-
-         
-
-      }
-
-   
+ 
    
    
 }

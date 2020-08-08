@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.project.product.VO.ProductResultVO;
 import com.project.product.service.ProductService;
+import com.project.product.vo.ProductResultVO;
 
 @Controller
 @RequestMapping("/Display")      //이미지 화면 출력 전용 컨트롤러

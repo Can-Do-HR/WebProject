@@ -77,7 +77,7 @@
 								<label for="addr-num">주소</label>
 								<div class="input-group">
 									<input type="text" class="form-control" id="postal_code"
-										name="postal_code" placeholder="우편번호" readonly>
+										name="postalCode" placeholder="우편번호" readonly>
 									<div class="input-group-addon">
 										<button type="button" class="btn btn-primary"
 											onclick="goPopup()">주소찾기</button>

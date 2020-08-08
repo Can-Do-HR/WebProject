@@ -17,8 +17,8 @@
 }
 
 .class-minibox-img img {
-	width: 100%;
-	height: auto;
+	width: 350px;
+	height: 225px;
 	border-radius: 5px;
 	transition: transform .5s ease;
 }

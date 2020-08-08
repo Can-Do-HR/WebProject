@@ -8,10 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.hee.heechart.VO.MultiVO;
-import com.hee.heechart.VO.MultiVO2;
-import com.project.product.VO.ProductResultVO;
 import com.project.product.service.ProductService;
+import com.project.product.vo.ProductResultVO;
 
 
 @Controller

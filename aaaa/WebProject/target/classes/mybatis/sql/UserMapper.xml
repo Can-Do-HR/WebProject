@@ -7,11 +7,11 @@
       
       
       <insert id="join">
-      		Insert into users (email, name, phone, pw, postal_code, address1, address2, joinType) values(#{email},#{name},#{phone},#{pw},#{postal_code},#{address1},#{address2}, "default")
+      		Insert into users (email, name, phone, pw, postalCode, address1, address2, joinType) values(#{email},#{name},#{phone},#{pw},#{postal_code},#{address1},#{address2}, "default")
       </insert>
       
       <insert id="kakaoJoin">
-      		Insert into users (email, name, phone, pw, postal_code, address1, address2, joinType) values(#{email},#{name},#{phone},#{pw},#{postal_code},#{address1},#{address2}, "kakao")
+      		Insert into users (email, name, phone, pw, postalCode, address1, address2, joinType) values(#{email},#{name},#{phone},#{pw},#{postal_code},#{address1},#{address2}, "kakao")
       </insert>
       
       <select id="login" resultType="Integer">

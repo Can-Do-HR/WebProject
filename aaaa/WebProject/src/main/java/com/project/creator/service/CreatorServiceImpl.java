@@ -9,8 +9,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.project.creator.VO.EnrollBoardVO;
-import com.project.product.VO.IntegratedContentVO;
+import com.project.creator.vo.EnrollBoardVO;
+import com.project.product.vo.IntegratedContentVO;
 
 
 @Service("creatorService")

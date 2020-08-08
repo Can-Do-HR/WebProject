@@ -131,9 +131,9 @@ body {
 						<c:when
 							test="${sessionScope.name == null  && sessionScope.k_name == null }">
 							<li><a id="userLogin"
-								href="${pageContext.request.contextPath}/User/Login">로그인</a></li>
+								href="${pageContext.request.contextPath}/User/UserLogin">로그인</a></li>
 							<li><a id="userLogin"
-								href="${pageContext.request.contextPath}/User/Join">회원가입</a></li>
+								href="${pageContext.request.contextPath}/User/UserJoin">회원가입</a></li>
 						</c:when>
 						<c:when
 							test="${sessionScope.name != null  && sessionScope.k_name == null }">

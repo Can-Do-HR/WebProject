@@ -1,4 +1,4 @@
-package com.project.creator.VO;
+package com.project.creator.vo;
 
 import java.util.ArrayList;
 import java.util.List;
