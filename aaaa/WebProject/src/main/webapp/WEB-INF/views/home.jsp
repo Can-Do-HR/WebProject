@@ -51,6 +51,7 @@ String name = (String) session.getAttribute("name");
 	<c:set var="name" value='<%=name%>' />
 	<%-- <c:set var="k_name" value='<%=k_name %>'/> --%>
 
+<<<<<<< HEAD
 	ㅋㅋ ${name } ㅋㅋ
 	<br> ㅎㅎ
 	<span id="k_name"></span> ㅎㅎ
@@ -71,6 +72,42 @@ String name = (String) session.getAttribute("name");
 	</c:choose>
 
 	<%-- 
+=======
+      <div class="menu">
+         <a href="${pageContext.request.contextPath}/">전체</a>
+         <a href="#">크리에이티브</a>
+         <a href="#">음..</a>
+         <a href="#">으음...</a>
+      </div>
+      
+      ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎ
+      ㅇㅎㅇㅎㅇㅎ
+      ㅇㅎㅇㅎㅇ
+      ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇ
+      ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅎㅇㅎ
+      
+      
+      <c:set var="name" value='<%=name %>'/>
+      <%-- <c:set var="k_name" value='<%=k_name %>'/> --%>
+      
+      ㅋㅋ ${name } ㅋㅋ<br>
+      ㅎㅎ <span id="k_name"></span> ㅎㅎ<br>
+      <%-- <%= k_name %><br> --%>
+      
+   <c:choose>
+      <c:when test="${name == null }">
+         <a href="${pageContext.request.contextPath}/User/Login">로그인</a>
+         <a href="${pageContext.request.contextPath}/User/Join">회원가입</a>
+      </c:when>
+      <c:when test="${name != null }">
+         <h3>${name }님 환영합니다</h3><br>
+         <a href="${pageContext.request.contextPath}/User/LogOut">로그아웃</a>
+         <a href="${pageContext.request.contextPath}/User/Mypage">마이페이지</a>
+      </c:when>
+   </c:choose>
+      
+      <%-- 
+>>>>>>> 45e93e499c4a739015018f6799528a632b36621d
       <a href="${pageContext.request.contextPath}/User/Login">로그인</a>
       <a href="${pageContext.request.contextPath}/User/Join">회원가입</a>
       <a href="${pageContext.request.contextPath}/User/Mypage">마이페이지</a> --%>
