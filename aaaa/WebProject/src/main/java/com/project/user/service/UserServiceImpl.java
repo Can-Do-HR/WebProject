@@ -2,6 +2,8 @@ package com.project.user.service;
 
 
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -19,10 +21,6 @@ public class UserServiceImpl implements UserService{
 	@Autowired
 	private SqlSession sqlsession;
 	
-	@Autowired
-	private UserMapper userMapper;
-	
-	
 	@Override
 	public int join(UserVO vo) {
 		//return userDAO.join(vo);
@@ -35,10 +33,13 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public UserVO checkUserIdAndPw(String email, String pw) {
+	public UserVO checkUserEmailAndPw(String email, String pw) {
 		//return userDAO.login(vo);
-//		return sqlsession.selectOne("com.project.user.mapper.login",vo);
-		return userMapper.checkUserIdAndPw(email, pw);
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("email", email);
+		map.put("pw", pw);
+		System.out.println(map);
+		return sqlsession.selectOne("com.project.user.mapper.checkUserEmailAndPw",map);
 	}
 	
 	@Override
@@ -54,13 +55,6 @@ public class UserServiceImpl implements UserService{
 		return sqlsession.update("com.project.user.mapper.update",vo);
 	}
 	
-		
-	@Override
-	public int imgUpload(String path) {
-		//return userDAO.imgUpload(path);
-		return sqlsession.insert("com.project.user.mapper.imgUpload",path);
-	}
-
 	@Override
 	public int idCheck(UserVO vo) {
 		//return userDAO.idCheck(vo);
@@ -156,7 +150,10 @@ public class UserServiceImpl implements UserService{
 			
 		}
 
-
+		@Override
+		public int permissionChange(int pno) {
+			return sqlsession.update("com.project.user.mapper.permissionChange", pno);
+		}
 
 	
 	

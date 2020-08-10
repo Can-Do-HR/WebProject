@@ -25,15 +25,13 @@
             select max(pno) from products;
       </select>
       
-      <insert id="enrollProduct">
-            insert into enroll values(#{pno},#{email})
-      </insert>
-      
       <select id="getAllProductList" resultType="ProductResultVO">
             select * from products
-      </select>
+      </select>      
       
-      
+      <insert id="EnrollProduct">
+            insert into enroll values(#{pno},#{email})
+      </insert>
       
       <!-- <insert id="ProductRegist">
             Insert into products (title, mentor, category, intro)

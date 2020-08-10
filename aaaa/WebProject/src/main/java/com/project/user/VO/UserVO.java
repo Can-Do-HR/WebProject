@@ -7,6 +7,7 @@ import lombok.Data;
 @Data
 public class UserVO {
 	
+	private int uno;
 	private String email;
 	private String name;
 	private String phone;
@@ -15,5 +16,6 @@ public class UserVO {
 	private String address1;
 	private String address2;
 	private Timestamp regdate;
+	private String permission;
 
 }

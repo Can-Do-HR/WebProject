@@ -129,15 +129,15 @@ body {
 
 					<c:choose>
 						<c:when
-							test="${sessionScope.name == null  && sessionScope.k_name == null }">
+							test="${sessionScope.userVO == null}">
 							<li><a id="userLogin"
 								href="${pageContext.request.contextPath}/User/UserLogin">로그인</a></li>
 							<li><a id="userLogin"
 								href="${pageContext.request.contextPath}/User/UserJoin">회원가입</a></li>
 						</c:when>
 						<c:when
-							test="${sessionScope.name != null  && sessionScope.k_name == null }">
-							<li>${sessionScope.name }님환영합니다</li>
+							test="${sessionScope.userVO != null}">
+							<li>${sessionScope.userVO.name }님환영합니다</li>
 							<li><a id="userLogin"
 								href="${pageContext.request.contextPath}/User/LogOut">로그아웃</a></li>
 							<li><a id="userMypage"
@@ -146,17 +146,7 @@ body {
 								href="${pageContext.request.contextPath}/User/CreatorJoin">크리에이터
 									지원</a></li>
 						</c:when>
-						<c:when
-							test="${sessionScope.name == null  && sessionScope.k_name != null }">
-							<li><span id="k_name"></span>님환영합니다</li>
-							<li><a id="userLogin"
-								href="${pageContext.request.contextPath}/User/LogOut">로그아웃</a></li>
-							<li><a id="userMypage"
-								href="${pageContext.request.contextPath}/User/Mypage">마이페이지</a></li>
-							<li><a id="creatorPage"
-								href="${pageContext.request.contextPath}/User/CreatorJoin">크리에이터
-									지원</a></li>
-						</c:when>
+						
 					</c:choose>
 
 					<!-- <li><a id="creatorPage">크리에이터 지원</a></li>
