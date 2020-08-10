@@ -10,6 +10,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.project.user.mapper.UserMapper;
 import com.project.user.vo.UserVO;
 
 @Service("UserService")
@@ -17,6 +18,10 @@ public class UserServiceImpl implements UserService{
 	
 	@Autowired
 	private SqlSession sqlsession;
+	
+	@Autowired
+	private UserMapper userMapper;
+	
 	
 	@Override
 	public int join(UserVO vo) {
@@ -30,9 +35,10 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public int login(UserVO vo) {
+	public UserVO checkUserIdAndPw(String email, String pw) {
 		//return userDAO.login(vo);
-		return sqlsession.selectOne("com.project.user.mapper.login",vo);
+//		return sqlsession.selectOne("com.project.user.mapper.login",vo);
+		return userMapper.checkUserIdAndPw(email, pw);
 	}
 	
 	@Override

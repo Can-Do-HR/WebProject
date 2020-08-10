@@ -1,11 +1,5 @@
 package com.project.controller;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -18,11 +12,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.project.user.service.UserService;
@@ -51,7 +42,9 @@ public class UserController {
    }
    
    @RequestMapping("LoginForm")
-   public String UserLoginForm(UserVO vo, HttpSession session, RedirectAttributes RA) {
+   public String UserLoginForm(@RequestParam("id") String email,
+		   					   @RequestParam("pw") String pw, 
+		   					   HttpServletRequest request) {
       
 	   //TODO:암호화 구현된거! 지우지마시오!
 //      vo.setPw(UserSha256.encrypt(vo.getPw()));
@@ -61,21 +54,20 @@ public class UserController {
 //            
 //      System.out.println("로그인에서 친 비밀번호 암호화 : " + inputEncryptedPw);
       
-      int result = userService.login(vo);
+     UserVO userVO = userService.checkUserIdAndPw(email, pw);
       System.out.println("login result : " + result);
       System.out.println("email : " + vo.getEmail());//입력한 이메일
       System.out.println("pw : " + vo.getPw());
       
       if(result == 0) {
-         RA.addFlashAttribute("msg","로그인실패");
+         request.setAttribute("msg","로그인실패");
          return "redirect:/User/UserLogin";
          
       } else {
          
          UserVO userVO = userService.getInfo(vo.getEmail());
 
-         session.setAttribute("email", userVO.getEmail());
-         session.setAttribute("name", userVO.getName());
+         
          
          System.out.println("세션값 : " + session.getAttribute("name"));
 
@@ -83,15 +75,19 @@ public class UserController {
       }
       
    }
-   
+ //TODO: 뭔갈 햇음
    @RequestMapping("KakaoLogin")
-   public String KakaoLogin(HttpServletRequest request, @RequestBody UserVO vo) {
+   public String KakaoLogin(HttpServletRequest request,HttpServletResponse response, Model model) {
       
       String k_name = request.getParameter("name");
       String k_email = request.getParameter("email");
       
       System.out.println(k_name);
       System.out.println(k_email);
+      
+      UserVO vo = new UserVO();
+      vo.setEmail(k_email);
+      vo.setName(k_name);
       
       // 이 이메일로 회원등록이 되어있는지 확인한 뒤
       // 있으면 그냥 냅두고 없다면 회원으로 등록. 
@@ -100,13 +96,25 @@ public class UserController {
       System.out.println("kakao result : " + result);
       
       if(result == 0) {
-//         UserVO uservo = new UserVO(k_email, k_name, "-", "-", "-", "-", "-",null);
-//         int result2 = userService.kakaoJoin(uservo);
+         request.setAttribute("msg", "카카오 유저 회원가입 절차를 진행합ㄴ다.");
+         try {
+            response.setContentType("text/html; charset=UTF-8");
+         }
+         catch(Exception e) {
+            e.printStackTrace();
+         }
+         model.addAttribute("k_name",k_name);
+         model.addAttribute("k_email",k_email);
+         return "/User/UserJoin";
       }
-      HttpSession session = request.getSession();
-      session.setAttribute("k_email", k_email);
-      session.setAttribute("k_name", k_name);
-      return "/home";
+      
+      else {
+         HttpSession session = request.getSession();
+         session.setAttribute("k_email", k_email);
+         session.setAttribute("k_name", k_name);
+         return "/home";
+      }
+
    }
    
    
