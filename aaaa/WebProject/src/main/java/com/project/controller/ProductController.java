@@ -1,8 +1,10 @@
 package com.project.controller;
 
 import java.io.File;
-import java.nio.file.Files;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -10,25 +12,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.project.product.service.ProductService;
 import com.project.product.vo.EnrollVO;
 import com.project.product.vo.IntegratedContentVO;
 import com.project.product.vo.MultiContentVO;
 import com.project.product.vo.MultiQnAVO;
 import com.project.product.vo.ProductResultVO;
 import com.project.product.vo.ProductVO;
-import com.project.product.vo.QnAVO;
-import com.project.util.FilePath;
+import com.project.product.service.ProductService;
 
 @Controller
 @RequestMapping("/Product")
@@ -37,7 +33,7 @@ public class ProductController {
    @Autowired
    ProductService productService;
    
-//   public static final String uploadFolder = "D:\\course\\spring\\upload\\board\\";
+   public static final String uploadFolder = "D:\\course\\spring\\upload\\board\\";
 
 
    @RequestMapping("ProductWrite")
@@ -46,6 +42,7 @@ public class ProductController {
       return "/Product/ProductWrite";
    }
 
+   
    @RequestMapping("ProductRegist")
    public String ProductRegist(ProductVO productVO,
          MultiContentVO multicontentVO, MultiQnAVO multiqnaVO,
@@ -53,6 +50,8 @@ public class ProductController {
          @RequestParam("ContentImg") List<MultipartFile> list
                                         
          ) {
+      System.out.println(productVO.getStartDate());
+      System.out.println(productVO.getEndDate());
       
       
       //, @RequestParam("thumbnail") MultipartFile thumb 
@@ -70,22 +69,55 @@ public class ProductController {
       String NextPnoFolder = String.valueOf(NextPno+1);
       
       //File newFolder = new File("D:\\course\\spring\\upload\\" + (NextPno+1));   
-      File newFolder = new File(FilePath.productPath + NextPnoFolder);   
+      File newFolder = new File(uploadFolder + NextPnoFolder);   
       newFolder.mkdir();
       
 
+      Calendar cal = Calendar.getInstance();
+      
+      SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+      
+      Date startDate = null;
+      Date endDate = null;
+      int week = 0;
+      try {
+          startDate = sdf.parse(productVO.getStartDate());
+          endDate = sdf.parse(productVO.getEndDate());
+          System.out.println(productVO.getStartDate());
+          System.out.println(productVO.getEndDate());
+          System.out.println(startDate);
+          System.out.println(endDate);
+          cal.setTime(startDate);
+      } catch(Exception e) {
+         e.printStackTrace();
+      }
+      System.out.println(startDate.compareTo(endDate));
+      while(startDate.compareTo(endDate) < 0) {
+         System.out.println(cal.getTime());
+         cal.add(Calendar.DATE, 7);
+         week++;
+         if(cal.getTime().compareTo(endDate) > 0) {
+            break;
+         }
+      }
+      String term = String.valueOf(week);
+      System.out.println(term + "주");
+      productVO.setTerm(term);
+      
+      
+      
       
       
       try {
          String fileRealName = thumb.getOriginalFilename(); //실제파일명
          
-         File ThumbNailFolder = new File(FilePath.productPath + NextPnoFolder + "\\thumbnail");
+         File ThumbNailFolder = new File(uploadFolder + NextPnoFolder + "\\thumbnail");
          ThumbNailFolder.mkdir();
          
-         File saveFile = new File(FilePath.productPath + NextPnoFolder + "\\thumbnail\\" + fileRealName );
+         File saveFile = new File(uploadFolder + NextPnoFolder + "\\thumbnail\\" + fileRealName );
          thumb.transferTo(saveFile); //실제 파일을 저장해주는 메서드 filewriter작업을 손쉽게 해주는 스프링 메서드
          
-         productVO.setThumbnail(FilePath.productPath + NextPnoFolder + "\\thumbnail\\" + fileRealName);
+         productVO.setThumbnail(uploadFolder + NextPnoFolder + "\\thumbnail\\" + fileRealName);
          
          //System.out.println("thumb : "  + productVO.getThumbnail());
          
@@ -97,12 +129,13 @@ public class ProductController {
 
       try {
          
-         File ContentImgFolder = new File(FilePath.productPath + NextPnoFolder + "\\contentImg");
+         File ContentImgFolder = new File(uploadFolder + NextPnoFolder + "\\contentImg");
          ContentImgFolder.mkdir();
 
          for(int i = 0; i < list.size(); i++) {
 
             System.out.println("i : " + i);
+            System.out.println("list size : " + list.size());
             String fileRealName = list.get(i).getOriginalFilename(); //파일실제이름
             String fileExtension = fileRealName.substring( fileRealName.lastIndexOf(".") , fileRealName.length() );
 
@@ -110,11 +143,11 @@ public class ProductController {
             fileRealName = String.valueOf(i+1);
             fileRealName += fileExtension;
 
-            File saveFile = new File(FilePath.productPath + NextPnoFolder + "\\contentImg\\" + fileRealName);
+            File saveFile = new File(uploadFolder + NextPnoFolder + "\\contentImg\\" + fileRealName);
             list.get(i).transferTo(saveFile); //실제 파일을 저장
 
 
-            multicontentVO.getContentList().get(i).setContentImgBox(FilePath.productPath + NextPnoFolder + "\\contentImg\\" + fileRealName);
+            multicontentVO.getContentList().get(i).setContentImgBox(uploadFolder + NextPnoFolder + "\\contentImg\\" + fileRealName);
          }
 
       } catch (Exception e) {
@@ -183,17 +216,44 @@ public class ProductController {
          map.put(qnaQList.get(i), qnaAList.get(i));
       }
       
+      System.out.println("map");
+      System.out.println("map");
+      System.out.println("map");
+      System.out.println("map");
+      System.out.println("map");
+      System.out.println("map");
+      System.out.println("map");
+      System.out.println(map.toString());
+      System.out.println(map.toString());
+      System.out.println(map.toString());
+      System.out.println(map.toString());
+      System.out.println(map.toString());
+      System.out.println(map.toString());
+      System.out.println(map.toString());
+      System.out.println(map.toString());
+      System.out.println(map.toString());
+      System.out.println(map.toString());
+
+      System.out.println("contentImgList : " + contentImgList.toString());
+      System.out.println("contentImgList : " + contentTextList.toString());
+
+
+
+
 
       model.addAttribute("productVO",productResultVO);
       model.addAttribute("contentImgList",contentImgList.size());
       model.addAttribute("contentTextList",contentTextList);
       model.addAttribute("map",map);
-//      model.addAttribute("qnaQList",qnaQList);
-//      model.addAttribute("qnaAList",qnaAList);
+      model.addAttribute("qnaQList",qnaQList);
+      model.addAttribute("qnaAList",qnaAList);
       //model.addAttribute("ImgList",ImgList);
 
       return "/Product/ProductDetail";
    }
+
+
+   
 
 
    //강의 등록                     //권한 필터 필요

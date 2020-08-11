@@ -107,9 +107,7 @@ body {
 	font-weight: normal;
 }
 
-* {
-	margin: 0 auto;
-}
+
 </style>
 
 </head>
@@ -171,6 +169,12 @@ body {
 			<a>로그아웃</a>
 		</div>
 	</div>
+	
+	
+	<br>
+	<br>
+	<br>
+	<br>
 
 	<!-- <script>
 		var asd = document.getElementById("hiddenInput");

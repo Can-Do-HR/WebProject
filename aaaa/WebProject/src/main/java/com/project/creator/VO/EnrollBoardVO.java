@@ -16,23 +16,9 @@ public class EnrollBoardVO {
 	private int pno;
 	private String title;
 	private String writer;
-	private ArrayList<String> fileNameList;
-	private ArrayList<String> contentList;
 	private Timestamp regdate;
 	
 	//동적인 폼을 스트링으로 가져온 것
 	private String content;
-	
-	private StringUtil stringUtil = new StringUtil();
-
-	public void setContent(String content) {
-		this.content = content;
-		Map<String, List<String>> map = stringUtil.makeList(content, "&&bhc&&");
-		
-		this.contentList = (ArrayList<String>) map.get("contentList");
-		this.fileNameList = (ArrayList<String>) map.get("fileNameList");
-	}
-
-	
 	
 }

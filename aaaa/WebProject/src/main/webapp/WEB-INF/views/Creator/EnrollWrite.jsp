@@ -13,8 +13,8 @@
 <body>
     <section>
         <div class="form-box">
-            <form action="EnrollBoardRegist" enctype="multipart/form-data" method="POST" name="creatorRegForm" style="margin:300px;">
-            	<input type="text" disabled="disabled" name="pno" value="${pno }">
+            <form action="EnrollBoardRegist" enctype="multipart/form-data" method="POST" id="creatorRegForm" style="margin:300px;">
+            	<input type="text" name="pno" value="${pno }">
                 <div class="input-box">
                     <input type="text" placeholder="제목을 적어주세요" name="title">
                 </div>
@@ -24,17 +24,18 @@
                     <div class="lecture-summary">
                         <div class="lecture-summary-img">
                         </div>
-                        <input type="file"  name="contentImg">
-                        <textarea cols="30" rows="7" name="enrollBoardList[0].contentText"></textarea>
+                        <input type="file"  name="contentImg" id="contentImg0">
+                        <textarea cols="30" rows="7" name="contentText" id="contentText0"></textarea>
                     </div>
                     <div class="add-write-button">
                         <button id="summatyAddBtn" type="button">추가하기</button>
                     </div>
+                    <input type="hidden" name="content" id=content>
                 </div>
     
     
                 <div class="form-btn-box">
-                    <button type="submit" class="point-btn">작성하기</button><!-- TODO: 수정하세요 -->
+                    <button type="button" id="formSubmitBtn" class="point-btn">작성하기</button><!-- TODO: 수정하세요 -->
                     <button type="button" class="btn">목록으로</button>
                 </div>
             </form>
@@ -44,12 +45,32 @@
     
     <script>
     $(document).ready(function(){
-
+		
+    	let contentBoxNum = 1;
+    	
+    	$("#formSubmitBtn").click(function(){
+    		let jsonContent = new Array();
+    		
+			for(let i = 0; i < contentBoxNum; i++){
+				let contentImg = "#contentImg" + i;
+				let contentText = "#contentText" + i;
+				if($(contentImg)[0].files[0] == '' || $(contentText).val() == ''){
+					alert('파일과 텍스트를 한 세트로 올려주세요.')
+				}
+				let contentBox =  new Object();
+				contentBox.contentImg = $(contentImg)[0].files[0].name;
+				contentBox.contentText = $(contentText).val();
+				jsonContent.push(contentBox);
+			}
+			let contentStr = JSON.stringify(jsonContent);
+			$('#content').val(contentStr);
+			
+			$('#creatorRegForm').submit();
+    	})
     	// $(".lecture-cover-img").click(function(){
     	//     $(".lecture-cover-img-input").click();
     	// })
 
-    	let contentBoxNum = 1;
 
     	//소개버튼 추가
     	$("#summatyAddBtn").click(function(){
@@ -74,12 +95,12 @@
     function createSummary(num){
     	const summaryBox = $('<div>').attr('class', 'lecture-summary');
     	const imgArea = $("<div>").attr('class', 'lecture-summary-img');
-    	const textArea = $('<textarea>').attr({'cols':'30', 'rows':'7', 'name': 'enrollBoardList[' + num + '].contentText'});
+    	const textArea = $('<textarea>').attr({'cols':'30', 'rows':'7', 'name': 'contentText', 'id' : 'contentText' + num});
 
     	
     	
     	summaryBox.append(imgArea)
-    	.append($('<input>').attr({'type': 'file',  'name': 'contentImg'}))
+    	.append($('<input>').attr({'type': 'file',  'name': 'contentImg', 'id':'contentImg' + num}))
     	.append(textArea);
     	return summaryBox;
     }

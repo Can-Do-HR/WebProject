@@ -13,6 +13,7 @@ import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -33,11 +34,9 @@ public class CreatorController {
 	@Autowired
 	CreatorService creatorService;
 	
-	private FileUtil fileUtil = new FileUtil(); //TODO: bean 생성하기
-	private StringUtil stringUtil = new StringUtil();
-	private String splitText = "&&bhc&&";
+	private FileUtil fileUtil = new FileUtil();
 	
-	@RequestMapping("/EnrollBoard") //강좌 게시판(접근 권한: 수강생, 크리에이터)
+	@GetMapping("/EnrollBoard") //강좌 게시판(접근 권한: 수강생, 크리에이터)
 	public String enrollBoard(@RequestParam("pno") String pno, Model model) {
 		ArrayList<EnrollBoardVO> enrollList = (ArrayList<EnrollBoardVO>)creatorService.getEnrollList(pno);
 		System.out.println(enrollList);
@@ -46,56 +45,27 @@ public class CreatorController {
 		return "/Creator/EnrollBoard";
 	}
 	
-	@RequestMapping("/EnrollDetail") //강좌 게시판 자세히 보기(접근권한: 수강생, 크리에이터)
+	@GetMapping("/EnrollDetail") //강좌 게시판 자세히 보기(접근권한: 수강생, 크리에이터)
 	public String enrollDetail(String eno, String pno, Model model) {
 		EnrollBoardVO enrollBoardVO = creatorService.getEnrollDetailBoard(eno, pno);
-		System.out.println(enrollBoardVO.toString());
 		model.addAttribute("enrollBoardVO", enrollBoardVO);
 		return "/Creator/EnrollDetail";
 	}
 	
-	@RequestMapping("/EnrollWrite") //강좌 글쓰기 화면(접근권한: 크리에이터)
+	@GetMapping("/EnrollWrite") //강좌 글쓰기 화면(접근권한: 크리에이터)
 	public String enrollWrite(String pno, Model model) {
-		
 		model.addAttribute("pno", pno);
-		
 		return "/Creator/EnrollWrite";
 	}
 	
 	@RequestMapping("/EnrollBoardRegist") //강좌 업로드  > DB에 가서 EnrollWrite에서 가져온 폼을insert함 (접근권한: 크리에이터)
 	public String enrollBoardRegist(EnrollBoardVO enrollBoardVO, 
-			  						MultiEnrollBoardContentVO multiEnrollBoardContentVO,
-			  						@RequestParam("contentImg") List<MultipartFile> list) {
-		int eno = creatorService.getMaxEno() + 1; // eno최고값 가져오기 + 1해서 새 eno를 만듭니다.
-		
-		System.out.println(multiEnrollBoardContentVO.getEnrollBoardList().get(0).getContentText());
-		
-		//파일 업로드
-		List<String> fileNameList = fileUtil.fileListUpload(list, FilePath.boardPath, eno);
-		System.out.println(fileNameList);
-		
-		//multiple row가 좋긴 한데 도무지 뺄 방법이 없어서 야생의 방법으로 빼옵니다. 두 List를 준비해주세요
-		List<EnrollBoardContentVO> enrollContentList = multiEnrollBoardContentVO.getEnrollBoardList();
-		List<String> contentList = new ArrayList<String>();
-		for(int i = 0; i < enrollContentList.size(); i++) {
-			contentList.add(enrollContentList.get(i).getContentText()); //vo에서 한땀한땀 뻬옵니다.
-		}
-		
-		//이쁘게 String으로 완성~
-		String contentString = stringUtil.makeString(fileNameList, contentList, splitText);
-		
-		System.out.println(contentString);
-		
-		//넣습니다. 통짜로 DB에 넣으면 완성~ content를 받아오면서 split해서 안의 리스트에 넣어줍니다.
-		enrollBoardVO.setContent(contentString);
-		
+			  						@RequestParam("contentImg") List<MultipartFile> contentImgList) {
+		int eno = creatorService.getMaxEno() + 1;
+		fileUtil.fileListUpload(contentImgList, FilePath.boardPath, eno);
 		creatorService.insertEnrollBoard(enrollBoardVO);
-		
-		
-		return "Redirect://Creator/EnrollBoard";
+		return "redirect:/Creator/EnrollBoard";
 	}
-	
-	
 	
 	@RequestMapping("/EnrollBoardModify") // 강좌 수정페이지(접근권한: 크리에이터)
 	public String enrollBoardModify(String eno, String pno, Model model) {
@@ -113,11 +83,7 @@ public class CreatorController {
 	}
 	
 	
-	//image 전송 REST API
-
-	@RequestMapping(
-			value = "/EnrollBoardImg"
-			)
+	@RequestMapping("/EnrollBoardImg")
 	public @ResponseBody byte[] getEnrollBoardImg(String eno, String fileName) throws IOException{
 //		InputStream in = getClass().getResourceAsStream(creatorFolderPath + "\\" + eno + "\\" + fileName);
 		System.out.println(fileName);

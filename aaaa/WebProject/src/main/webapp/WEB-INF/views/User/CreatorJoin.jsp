@@ -17,11 +17,11 @@
         <div class="right">
 
             <div>
-                <form action="PermissionChange" method="POST">
+                <form>
                     <span>음..문구 추천받습니다</span><br>
                     이메일 인증 : <input type="text"><br>
                     
-                    <button type="submit">크리에이터 도전하기</button>
+                    <button type="button">크리에이터 도전하기</button>
                 </form>
     
             </div>

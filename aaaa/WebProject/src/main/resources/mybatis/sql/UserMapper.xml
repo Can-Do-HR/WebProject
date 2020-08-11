@@ -7,11 +7,11 @@
       
       
       <insert id="join">
-      		Insert into users (email, name, phone, pw, postalCode, address1, address2, joinType) values(#{email},#{name},#{phone},#{pw},#{postal_code},#{address1},#{address2}, "default")
+      		Insert into users (email, name, phone, pw, postalCode, address1, address2, joinType, permission) values(#{email},#{name},#{phone},#{pw},#{postalCode},#{address1},#{address2}, "default", "default")
       </insert>
       
       <insert id="kakaoJoin">
-      		Insert into users (email, name, phone, pw, postalCode, address1, address2, joinType) values(#{email},#{name},#{phone},#{pw},#{postal_code},#{address1},#{address2}, "kakao")
+      		Insert into users (email, name, phone, pw, postalCode, address1, address2, joinType) values(#{email},#{name},#{phone},#{pw},#{postalCode},#{address1},#{address2}, "kakao")
       </insert>
       
       <select id="checkUserEmailAndPw" parameterType="map" resultType="UserVO">
@@ -27,8 +27,27 @@
       </select>
       
        <update id="permissionChange">
-      		update 
+      		update users set permission='creator' where uno = #{uno }
       </update>
+      
+        <update id="update">
+            update users set name=#{name},phone=#{phone},pw=#{pw},postalCode=#{postalCode},address1=#{address1},address2=#{address2} where email=#{email} 
+      </update>
+
+
+	<select id="pwCheck" resultType="int">
+		select count(*) from users where pw=#{pw}
+	</select>
+
+	<delete id="delete">
+		delete from users where email=#{email}
+	</delete>
+
+	<!-- 비밀번호 변경 -->
+	<update id="updatePw">
+		update users set pw = #{pw} where email=#{email}
+	</update>
+      
       
 </mapper>
 

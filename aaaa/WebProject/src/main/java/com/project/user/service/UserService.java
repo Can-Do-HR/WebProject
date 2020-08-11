@@ -13,7 +13,7 @@ public interface UserService {
 	public int update(UserVO vo);//업데이트처리
 	public int idCheck(UserVO vo);//중복체크
 	public int pwCheck(UserVO vo);
-	public int delete(UserVO vo);
+	public int delete(String email);
 	public int updatePw(UserVO vo)throws Exception;//비밀번호수정
 	public void sendEmail(UserVO vo,String div);//메일발송
 	public void findPw(UserVO vo,HttpServletResponse response)throws Exception ;

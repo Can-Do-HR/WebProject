@@ -11,6 +11,7 @@
     <title>Document</title>
       
     <script src="${pageContext.request.contextPath}/js/jquery-3.5.1.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/home.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/utilProduct.css">
@@ -56,7 +57,7 @@
                     <textarea cols="60" rows="7" name="intro"></textarea><br>
                     <span class="form-notice"></span><br>
                     <div class="lecture-info-date-picker">
-                        * 강좌 기간: <!-- <input type="text" size="15" name="startDate">   ~   <input type="text" size="15" name="endDate"> -->
+                        * 강좌 기간: <input type="date" size="15" name="startDate" id="startDate">   ~   <input type="date" size="15" name="endDate" id="endDate">
                     </div>
                             <input type="hidden" name="term" value="000">
                             <input type="hidden" name="creator" value="000">
@@ -128,5 +129,9 @@
 
     <script src="${pageContext.request.contextPath}/js/creatorBoard.js"></script>
     </section>
+    
+    <script>
+    
+    </script>
 </body>
 </html>

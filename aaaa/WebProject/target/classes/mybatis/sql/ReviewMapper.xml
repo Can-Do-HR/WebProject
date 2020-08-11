@@ -2,23 +2,34 @@
 <!DOCTYPE mapper
       PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-   
+
 <mapper namespace="com.project.review.mapper">
-      
-      <select id="reviewBoard" resultType="String">
-            select product from Review where pno= #{pno}
-      </select>
-         
-      <insert id="reviewRegist">
-          insert into review (writer, title , content, satisfaction) values (#{writer}, #{title}, #{content}, #{satisfaction})
-            
-      </insert>
-      
-      
-      <select id="getList" resultType="ReviewVO">
-            select * from review
-      </select>
-      
-      
-      
+
+   <select id="reviewBoard" resultType="ReviewVO">
+      select product from Review where pno= #{pno}
+   </select>
+
+   <insert id="reviewRegist">
+      insert into review (writer, title , content, satisfaction) values
+      (#{writer}, #{title}, #{content}, #{satisfaction})
+
+   </insert>
+
+
+   <select id="getList" resultType="ReviewVO">
+       select * from review 
+   <!--    SELECT *
+      FROM review
+      LIMIT#{10}
+      OFFSET#{1} -->
+   </select>
+
+   <select id="getReviewDetail" resultType="ReviewVO"> 
+      select * from Review where rno= #{rno}
+   </select>
+   
+   <select id="reviewModify" >
+       
+   </select>
+
 </mapper>

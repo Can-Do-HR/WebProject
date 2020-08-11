@@ -67,9 +67,9 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public int delete(UserVO vo) {
+	public int delete(String email) {
 		
-		return sqlsession.delete("com.project.user.mapper.delete",vo);
+		return sqlsession.delete("com.project.user.mapper.delete", email);
 	}
 
 	@Override

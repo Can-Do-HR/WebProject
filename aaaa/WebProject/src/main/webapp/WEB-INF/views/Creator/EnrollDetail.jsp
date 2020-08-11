@@ -1,48 +1,39 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" type="text/css" href="../css/all.css">
-    <script src="${pageContext.request.contextPath}/js/jquery-3.5.1.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<link rel="stylesheet" type="text/css" href="../css/all.css">
+<script src="${pageContext.request.contextPath}/js/jquery-3.5.1.js"></script>
 </head>
 <body>
-    <section>
-        <div class="board-title">
-            <span class="board-title-span">${enrollBoardVO.title }</span>
-        </div>
-        <hr>
-        <c:forEach var="i" begin="0" end="${fn:length(enrollBoardVO.fileNameList) - 1}">
-        
-        <div class="board-content">
-        	<div class="img-box">
-        		<img src="EnrollBoardImg?eno=${enrollBoardVO.eno }&fileName=${enrollBoardVO.fileNameList[i]}">
-        	</div>
-            <span class="board-content-span">${enrollBoardVO.contentList[i]}</span>
-        </div>
-        </c:forEach>
-        <div class="board-detail-btns">
-            <button type="button" class="point-btn" id="modifyBtn">수정하기</button>
-            <button type="button" id="deleteBtn">삭제하기</button>
-            <button type="button" id="listBtn">목록으로</button>
-        </div>
-    </section>
-    
-   	<script>
+	<section>
+		<div class="board-title">
+			<span class="board-title-span">${enrollBoardVO.title }</span>
+		</div>
+		<hr>
+		<div class="board-content"></div>
+		<div class="board-detail-btns">
+			<button type="button" class="point-btn" id="modifyBtn">수정하기</button>
+			<button type="button" id="deleteBtn">삭제하기</button>
+			<button type="button" id="listBtn">목록으로</button>
+		</div>
+	</section>
+
+	<script>
    		$(document).ready(function(){
    			let modifyBtn = $("#modifyBtn")
    			let deleteBtn = $("#deleteBtn")
    			let listBtn = $("#listBtn")
    			
-   			
    			modifyBtn.click(function(){
-   				location.href="/EnrollBoardModify?eno=${enrollBoardVO.eno}";
+   				location.href='/EnrollBoardModify?eno=' + eno;
    			})
    			
    			deleteBtn.click(function(){
@@ -54,9 +45,33 @@
    			})
    			
    			listBtn.click(function(){
-   				location.href="/EnrollBoard?eno=${enrollBoardVO.eno}&pno=${enrollBoardVO.pno}";
+   				location.href='${pageContext.request.contextPath}'+"/Creator/EnrollBoard?pno=" + '${enrollBoardVO.pno}';
    			})
+   			
+   			let contentStr = '${enrollBoardVO.content}';
+			let contentJson = JSON.parse(contentStr);
+			let eno = '${enrollBoardVO.eno}';
+			console.log(eno)
+			viewContentBox(contentJson, eno);
+			
    		})
+   		
+   		function viewContentBox(list, eno){
+   			for(let i = 0; i < list.length; i++){
+   				let content = list[i];
+   				console.log(content)
+   				const imgBox = $('<div>').attr('class', 'img-box');
+   				const img = $('<img>').attr('src', 'EnrollBoardImg?eno=' + eno + '&fileName=' + content.contentImg);
+   				imgBox.append(img);
+   				
+   				const span = $('<span>').attr('class','board-content-span')
+   										.html(content.contentText);
+   				
+   				$('.board-content').append(imgBox);
+   				$('.board-content').append(span);
+   			}
+   				
+   			}
    	</script>
 </body>
 </html>

@@ -56,6 +56,7 @@ public class UserController {
 		//      System.out.println("로그인에서 친 비밀번호 암호화 : " + inputEncryptedPw);
 
 		UserVO userVO = userService.checkUserEmailAndPw(email, pw);
+		userVO.setPw(null);
 		System.out.println(userVO);
 		
 		if(userVO == null) {
@@ -64,6 +65,10 @@ public class UserController {
 		} else {
 			HttpSession session = request.getSession();
 			session.setAttribute(SessionKeyCode.userKey, userVO);
+			session.setAttribute("userVO", userVO);
+			System.out.println(session.getAttribute(SessionKeyCode.userKey));
+			System.out.println(session.getAttribute("userVO"));
+			
 			//         System.out.println("세션값 : " + session.getAttribute("name"));
 
 			return "redirect:/";
@@ -93,12 +98,7 @@ public class UserController {
 
 		if(result == 0) {
 			request.setAttribute("msg", "카카오 유저 회원가입 절차를 진행합ㄴ다.");
-			try {
-				response.setContentType("text/html; charset=UTF-8");
-			}
-			catch(Exception e) {
-				e.printStackTrace();
-			}
+			response.setContentType("text/html; charset=UTF-8");
 			model.addAttribute("k_name",k_name);
 			model.addAttribute("k_email",k_email);
 			return "/User/UserJoin";
@@ -121,7 +121,7 @@ public class UserController {
 	}
 
 	@ResponseBody
-	@GetMapping("/emailCheck")
+	@PostMapping("/emailCheck")
 	public int UserIdCheck(@RequestBody UserVO vo) {      //오류잇는지 확인
 		int result = userService.idCheck(vo);
 		System.out.println("중복여부 : " + result);
@@ -203,15 +203,15 @@ public class UserController {
 	}
 
 	//TODO: 이름 delete > UserDelete로 직관적으로 바꿨는데 못찾겠어요ㅠ
-	//TODO: RedirectAttribute를 Request로 바꾸자..그게그거에요
 	@PostMapping("/UserDelete")
-	public String UserDelete(UserVO vo,HttpServletRequest request) {
-		int result = userService.pwCheck(vo);
-		if(result==1) {
-			userService.delete(vo);
-			//          session.invalidate(); //왜 또 세션 날려요 엉엉
+	public String UserDelete(UserVO userVO,HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		UserVO MyuserVO = (UserVO) session.getAttribute(SessionKeyCode.userKey);
+		UserVO resultVO = userService.checkUserEmailAndPw(MyuserVO.getEmail(), userVO.getPw());
+		if(resultVO != null) {
+			userService.delete(MyuserVO.getEmail());
 		}else {
-			//            RA.addFlashAttribute("msg","탈퇴실패");
+			session.removeAttribute(SessionKeyCode.userKey);
 			request.setAttribute("msg", "탈퇴에 실패했습니다.");
 			return "redirect:/User/UserUpdate";
 		}
@@ -220,8 +220,12 @@ public class UserController {
 	}
 
 	@PostMapping("/PermissionChange")
-	public String permissionChange(String email, HttpServletRequest request) {
+	public String permissionChange(@RequestParam("email") String email, 
+								   HttpServletRequest request) {
 		UserVO userVO = (UserVO) request.getSession().getAttribute(SessionKeyCode.userKey);
+		if(userVO.getPermission().equals("creator")) {
+			return "Creator/MyCreatorPage"; //TODO: 이거 상의해야함
+		}
 		if(userVO.getEmail().equals(email)) {
 			userService.permissionChange(userVO.getUno());
 			return "Creator/MyCreatorPage";
@@ -229,6 +233,7 @@ public class UserController {
 				return "/";
 			}
 	}
+	
 	
 	@RequestMapping("/UserModifyPw")
 	public String  UserModifyPw() {

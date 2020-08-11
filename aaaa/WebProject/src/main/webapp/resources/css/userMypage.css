@@ -1,4 +1,3 @@
-
 .mypage-info{
     display:flex;
     margin-top: 30px;
@@ -13,16 +12,6 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     text-align: center;
     border-radius: 5px;
-}
-
-.mypage-img{
-    margin-bottom:20px;
-}
-
-.mypage-info-btns > button{
-    width: 100%;
-    height: 30px;
-    margin: 5px;
 }
 
 
@@ -45,6 +34,6 @@
     z-index: 10;
 }
 
-.create-view-minibox  span {
+.create-view-minibox span {
     color: #fff;
 }

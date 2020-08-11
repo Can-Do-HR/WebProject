@@ -144,7 +144,7 @@ ul li {list-style:none; }
             </table>
                 
                      <!--페이지 네이션을 가져옴-->
-               <form action="ReviewBoard" name="pageForm">
+               <form name="pageForm">
                   <div class="text-center">
                      <hr>
                      <ul class="pagination pagination-sm" id="pagination">
@@ -165,6 +165,8 @@ ul li {list-style:none; }
                      </ul>
 
                      <!-- 페이지 클릭시 숨겨서 보낼 값 -->
+                     
+                     <input type="hidden" name="pno"   value="${ReviewPageVO.cri.pageNum }"> 
                      <input type="hidden" name="pageNum"   value="${ReviewPageVO.cri.pageNum }"> 
                      <input type="hidden" name="amount" value="${ReviewPageVO.cri.amount }">
                      <input type="hidden" name="searchType" value="${ReviewPageVO.cri.searchType }">

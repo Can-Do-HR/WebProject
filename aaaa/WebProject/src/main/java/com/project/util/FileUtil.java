@@ -1,48 +1,39 @@
 package com.project.util;
 
 import java.io.File;
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
 public class FileUtil {
 
-	public List<String> fileListUpload(List<MultipartFile> fileList, String folderPath, int boardNum) {
+	public int fileListUpload(List<MultipartFile> fileList, String folderPath, int boardNum) {
 		
-		List<String> fileNameList = new ArrayList();
 		folderPath += ("\\" + boardNum);
 		
 		File boardFolder = new File(folderPath);
 		boardFolder.mkdir(); //^^
-		
-		for(int i = 0; i < fileList.size(); i++) {
-			String realFileName = null;
-			MultipartFile file = fileList.get(i);
-			realFileName = fileUpload(file, folderPath);
-			fileNameList.add(realFileName);
+		try {
+			for(int i = 0; i < fileList.size(); i++) {
+				MultipartFile file = fileList.get(i);
+				fileUpload(file, folderPath);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
 		}
 		
 		
-		return fileNameList;
+		return 1;
 	}
 	
-	public String fileUpload(MultipartFile file, String folderPath) {
-			
-		String fileRealName = null;
+	public void fileUpload (MultipartFile file, String folderPath) throws IOException {
 		
-		try {
-			fileRealName = file.getOriginalFilename();
+			String fileRealName = file.getOriginalFilename();
 			
 			File saveFile = new File(folderPath + "\\" + fileRealName);
 			file.transferTo(saveFile);
-			
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return fileRealName;
 	}
 	
 }

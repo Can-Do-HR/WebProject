@@ -1,14 +1,10 @@
 package com.project.product.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import com.project.product.vo.ContentVO;
 import com.project.product.vo.EnrollVO;
 import com.project.product.vo.IntegratedContentVO;
-import com.project.product.vo.MultiContentVO;
 import com.project.product.vo.ProductResultVO;
-import com.project.product.vo.ProductVO;
 
 public interface ProductService {
    

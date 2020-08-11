@@ -31,7 +31,7 @@
                 <span class="mypage-info-email">email@example.com</span>
             </div><hr>
             <div class="mypage-info-btns">
-                <button type="button" class="point-btn">회원정보 수정하기</button><br>
+                <button type="button" class="point-btn" onclick="location.href='UserUpdate'">회원정보 수정하기</button><br>
                 <button type="button" class="simple-btn">회원 탈퇴</button>
             </div>
         </div>
@@ -259,60 +259,6 @@
         </div>
     </div>
 </section>
-
-	
-<div class="modal fade" id="replyModal" role="dialog">
-    <div class="modal-dialog modal-md">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="CloseBtn" data-dismiss="modal">닫기</button>
-                <h4 class="modal-title">정보수정</h4>
-            </div>
-            <div class="modal-body">
-                <!--수정폼-->
-                <div class="ProfileForm">
-                    <div class="StyledFormGroup">
-                        <label class="LabelName">이름</label>
-                        <div class="StyledInputField">
-                            <input type="text" name="name" id=""
-                                class="StyledInputFieldText" placeholder="이름을 입력해주세요.">
-                        </div>
-                    </div>
-                </div>
-                <div class="ProfileForm">
-                    <div class="StyledFormGroup">
-                        <label class="LabelName">닉네임</label>
-                        <div class="StyledInputField">
-                            <input type="text" name="nickName" id=""
-                                class="StyledInputFieldText" placeholder="">
-                        </div>
-                    </div>
-                </div>
-                <div class="ProfileForm">
-                    <div class="StyledFormGroup">
-                        <label class="LabelName">휴대전화 번호</label>
-                        <div class="StyledInputField">
-                            <input type="text" name="nickName" id=""
-                                class="StyledInputFieldText" placeholder="휴대폰번호를 입력해주세요.">
-                        </div>
-                    </div>
-                </div>
-                <div class="updateForm">
-                    <button type="submit" class="btn logBtn" id="modalModBtn">
-                        <span class="ButtonText">수정하기 </span>
-                    </button>
-                </div>
-                <div class="signOutForm">
-                    <button type="submit" class="btn logBtn signOutBtn" id="modalOutBtn">
-                        <span class="ButtonText">회원탈퇴</span>
-                    </button>
-                </div><!--수정폼끝-->
-            </div>
-        </div>
-    </div>
-</div>
-
-
 
 </body>
 </html>

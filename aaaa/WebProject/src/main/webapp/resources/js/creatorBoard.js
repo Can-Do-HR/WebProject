@@ -1,5 +1,9 @@
 
+
+
 $(document).ready(function(){
+   
+   
    
    $(document).on('click','#lecture-summary-img1',function(){
       console.log('111');
@@ -287,6 +291,19 @@ function imgSet1(input) {
 }
 
 let snum = 1;
+
+$(function() {
+     $( "#startDate" ).datepicker({
+       dateFormat: 'yy-mm-dd'
+     });
+   });
+
+$(function() {
+     $( "#endDate" ).datepicker({
+       dateFormat: 'yy-mm-dd'
+     });
+   });
+
 //$("#ContentImgInput1").change(function() {
 //   imgSet1(this); //this는 #file자신 태그를 의미
 //});

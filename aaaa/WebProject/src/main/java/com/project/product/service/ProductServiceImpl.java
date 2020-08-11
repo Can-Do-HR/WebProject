@@ -7,12 +7,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.project.product.vo.ContentVO;
 import com.project.product.vo.EnrollVO;
 import com.project.product.vo.IntegratedContentVO;
-import com.project.product.vo.MultiContentVO;
 import com.project.product.vo.ProductResultVO;
-import com.project.product.vo.ProductVO;
 
 @Service("ProductService")
 public class ProductServiceImpl implements ProductService{

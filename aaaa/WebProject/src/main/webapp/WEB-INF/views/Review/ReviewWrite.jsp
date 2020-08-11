@@ -169,7 +169,7 @@ ul li {list-style:none; }
                      <input type="hidden" name="amount" value="${ReviewPageVO.cri.amount }">
                      <input type="hidden" name="searchType" value="${ReviewPageVO.cri.searchType }">
                      <input type="hidden" name="searchName" value="${ReviewPageVO.cri.searchName }">
-                     <button type="button" class="btn btn-info" onclick="location.href='ReviewWrite' ">글쓰기</button>
+                     <button type="button" class="btn btn-info" onclick="location.href='/ReviewWrite' ">글쓰기</button>
                   </div>
                </form>
                 

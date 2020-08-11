@@ -1,12 +1,5 @@
-$('document').ready(function () {
-    //모달 띄우는 함수            
-    $(".UpdateBtn").click(function(){
-        event.preventDefault();
-        
-        $("#replyModal").modal("show");
-        
-    })
-    
+$("document").ready(function(){
+       
     var swiper = new Swiper('.swiper-container', {
         spaceBetween: 0, //마진값
         slidesPerView: 4,

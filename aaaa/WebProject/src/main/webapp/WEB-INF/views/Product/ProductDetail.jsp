@@ -162,10 +162,7 @@
                     
                     <div class="qna-box-space">
                        
-                          <h2>ㅋㅋㅋㅋㅋㅋ</h2>
                        <c:forEach var="i" items="${map }">
-                          <h2>ㅎㅎㅎㅎㅎㅎㅎ</h2>
-                          <h2>${i.key }</h2>
                           <div class="qna-box">
                                <div>
                                    <span class="qSpan">Q : ${i.key }</span><br>

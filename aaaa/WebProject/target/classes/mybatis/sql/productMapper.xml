@@ -12,8 +12,8 @@
       </insert> -->
       
       <insert id="ProductRegist">
-            Insert into products (title, category, intro, volume, price, contents, qna, term, creator, thumbnail)
-            values(#{productVO.title}, #{productVO.category}, #{productVO.intro}, #{productVO.volume}, #{productVO.price}, #{multicontentVO.listStr}, #{multiqnaVO.qnAListStr}, #{productVO.term}, #{productVO.creator}, #{productVO.thumbnail} )
+            Insert into products (title, category, intro, volume, price, contents, qna, term, creator, thumbnail, startDate, endDate)
+            values(#{productVO.title}, #{productVO.category}, #{productVO.intro}, #{productVO.volume}, #{productVO.price}, #{multicontentVO.listStr}, #{multiqnaVO.qnAListStr}, #{productVO.term}, #{productVO.creator}, #{productVO.thumbnail}, #{productVO.startDate}, #{productVO.endDate} )
       </insert>
       
       
@@ -25,13 +25,15 @@
             select max(pno) from products;
       </select>
       
-      <select id="getAllProductList" resultType="ProductResultVO">
-            select * from products
-      </select>      
-      
-      <insert id="EnrollProduct">
+      <insert id="enrollProduct">
             insert into enroll values(#{pno},#{email})
       </insert>
+      
+      <select id="getAllProductList" resultType="ProductResultVO">
+            select * from products
+      </select>
+      
+      
       
       <!-- <insert id="ProductRegist">
             Insert into products (title, mentor, category, intro)
